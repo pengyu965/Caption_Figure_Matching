@@ -27,7 +27,6 @@ def matchpair_gen(input_dir):
                         data_dic = j_list[i]
                         output_dic["Figure_path"] = parts_dir + "/" + "0-"+data_dic["Type"]+"-c"+str(data_dic["Number"])+".png"
                         output_dic["Caption"] = data_dic["Caption"]
-
                         # print(data_dic["Caption"].split(" ", 2))
                         # try:
                         #     nohead = data_dic["Caption"].split(" ", 2)[2]
