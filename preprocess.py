@@ -26,33 +26,34 @@ def matchpair_gen(input_dir):
                         output_dic = {}
                         data_dic = j_list[i]
                         output_dic["Figure_path"] = parts_dir + "/" + "0-"+data_dic["Type"]+"-c"+str(data_dic["Number"])+".png"
+                        output_dic["Caption"] = data_dic["Caption"]
                         # print(data_dic["Caption"].split(" ", 2))
-                        try:
-                            nohead = data_dic["Caption"].split(" ", 2)[2]
-                            nohead_list = nohead.split(" ")
-                            for i in range(len(nohead_list)):
-                                nohead_list[i] = re.sub('[^A-Za-z0-9]+', '', nohead_list[i])
+                        # try:
+                        #     nohead = data_dic["Caption"].split(" ", 2)[2]
+                        #     nohead_list = nohead.split(" ")
+                        #     for i in range(len(nohead_list)):
+                        #         nohead_list[i] = re.sub('[^A-Za-z0-9]+', '', nohead_list[i])
                             
-                            while "" in nohead_list:
-                                nohead_list.remove("")
+                        #     while "" in nohead_list:
+                        #         nohead_list.remove("")
 
-                            ## Could Adding the support to seperate the "," "." and
-                            ## process them as seperate mark
-                            ## By replace the nohead_list[i] = re.sub('[^A-Za-z0-9]+', '', nohead_list[i])
-                            ## as nohead_list[i] = re.sub('[^A-Za-z0-9,.]+', '', nohead_list[i])
-                            ## Then uncommand following code:
+                        #     ## Could Adding the support to seperate the "," "." and
+                        #     ## process them as seperate mark
+                        #     ## By replace the nohead_list[i] = re.sub('[^A-Za-z0-9]+', '', nohead_list[i])
+                        #     ## as nohead_list[i] = re.sub('[^A-Za-z0-9,.]+', '', nohead_list[i])
+                        #     ## Then uncommand following code:
 
-                            # for j in range(len(nohead_list)):
-                            #     if "," in nohead_list[j] and nohead_list[j] != ",":
-                            #         nohead_list[j] = nohead_list[j].split(",")[0]
-                            #         nohead_list.insert(j+1,",")
-                            #     if "." in nohead_list[j] and nohead_list[j] != ".":
-                            #         nohead_list[j] = nohead_list[j].split(".")[0]
-                            #         nohead_list.insert(j+1,".")
+                        #     # for j in range(len(nohead_list)):
+                        #     #     if "," in nohead_list[j] and nohead_list[j] != ",":
+                        #     #         nohead_list[j] = nohead_list[j].split(",")[0]
+                        #     #         nohead_list.insert(j+1,",")
+                        #     #     if "." in nohead_list[j] and nohead_list[j] != ".":
+                        #     #         nohead_list[j] = nohead_list[j].split(".")[0]
+                        #     #         nohead_list.insert(j+1,".")
 
-                            output_dic["Caption"] = nohead_list
-                        except IndexError:
-                            continue
+                        #     output_dic["Caption"] = nohead_list
+                        # except IndexError:
+                        #     continue
                         
                         output_list.append(output_dic)
                         # print(output_list)
