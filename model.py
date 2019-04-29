@@ -11,7 +11,7 @@ import nltk
 import word2vec
 
 class Model:
-    def __init__(self, batch_size=50, lr = 0.0001, keep_prob=0.4, class_num ,is_training = True):
+    def __init__(self, batch_size=50, lr = 0.0001, keep_prob=0.4, class_num=2 ,is_training = True):
         self.layer ={}
         self.batch_size = batch_size
         self.lr = lr 
