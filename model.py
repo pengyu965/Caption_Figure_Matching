@@ -11,11 +11,12 @@ import nltk
 import word2vec
 
 class Model:
-    def __init__(self, batch_size=50, lr = 0.0001, keep_prob=0.4, is_training = True):
+    def __init__(self, batch_size=50, lr = 0.0001, keep_prob=0.4, class_num ,is_training = True):
         self.layer ={}
         self.batch_size = batch_size
         self.lr = lr 
         self.keep_prob = keep_prob
+        self.class_num = class_num
         self.is_training = is_training
 
         self.image_input = tf.placeholder(tf.float32, [self.batch_size, None, None, 5], name='input_image') 
@@ -89,14 +90,20 @@ class Model:
         with tf.variable_scope('fc1',reuse=tf.AUTO_REUSE):
             self.layer['fc1_layer'] = tf.keras.layers.Dense(units=512, activation=tf.nn.relu)(flatten_image_feature)
         
-        with tf.variable_scope('drop_out', reuse=tf.AUTO_REUSE):
+        with tf.variable_scope('drop_out_1', reuse=tf.AUTO_REUSE):
             self.layer['dropout_1'] = tf.layers.dropout(inputs = self.layer['fc1_layer'], rate = self.keep_prob)
         
         with tf.variable_scope('fc2', reuse=tf.AUTO_REUSE):
             self.layer['fc2_layer'] = tf.layers.dense(self.layer['dropout_1'], units = 128, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
         
+        with tf.variable_scope('drop_out_2', reuse=tf.AUTO_REUSE):
+            self.layer['dropout_2'] = tf.layers.dropout(inputs = self.layer['fc2_layer'], rate = self.keep_prob)
+
+        with tf.variable_scope('fc3', reuse=tf.AUTO_REUSE):
+            self.layer['fc3_layer'] = tf.layers.dense(self.layer['dropout_2'], units = 32, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
+
         with tf.variable_scope('fc_output', reuse=tf.AUTO_REUSE):
-            self.layer['logits'] = tf.layers.dense(self.layer['fc2_layer'], units = 2)
+            self.layer['logits'] = tf.layers.dense(self.layer['fc3_layer'], units = self.class_num)
         
         with tf.variable_scope('softmax'):
             self.layer['softmax'] = tf.nn.softmax(self.layer['logits'])
@@ -130,7 +137,7 @@ class Model:
 
 
 class Trainer:
-    def __init__(self, input_dir, model, epoch = 10, class_num = 3):
+    def __init__(self, input_dir, model, epoch = 10, class_num = 2):
         self.input_dir = input_dir 
         self.model = model 
         self.epoch = epoch

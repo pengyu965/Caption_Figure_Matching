@@ -41,7 +41,7 @@ def get_args():
 if __name__ == "__main__":
     FLAGS = get_args()
     if FLAGS.train:
-        cnn_model = model.Model(FLAGS.bsize, FLAGS.lr, FLAGS.keep_prob, is_training=True)
+        cnn_model = model.Model(FLAGS.bsize, FLAGS.lr, FLAGS.keep_prob, FLAGS.class_num, is_training=True)
         trainer = model.Trainer(FLAGS.data, cnn_model, FLAGS.epoch, FLAGS.class_num)
         writer = tf.summary.FileWriter("./log/")
 
