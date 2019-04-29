@@ -87,23 +87,18 @@ class Model:
         flatten_image_feature = tf.reshape(self.layer['image_pool2_layer'], (self.batch_size, 160000))
         # flatten_sentence_feature = tf.reshape(self.layer['sentence_pool2_layer'], (self.batch_size, 320000))
         # feature = tf.concat([flatten_image_feature, flatten_sentence_feature],1)
-        with tf.variable_scope('fc1',reuse=tf.AUTO_REUSE):
-            self.layer['fc1_layer'] = tf.keras.layers.Dense(units=512, activation=tf.nn.relu)(flatten_image_feature)
+        
+        with tf.variable_scope('fc1', reuse=tf.AUTO_REUSE):
+            self.layer['fc1_layer'] = tf.layers.dense(flatten_image_feature, units = 128, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
         
         with tf.variable_scope('drop_out_1', reuse=tf.AUTO_REUSE):
             self.layer['dropout_1'] = tf.layers.dropout(inputs = self.layer['fc1_layer'], rate = self.keep_prob)
-        
-        with tf.variable_scope('fc2', reuse=tf.AUTO_REUSE):
-            self.layer['fc2_layer'] = tf.layers.dense(self.layer['dropout_1'], units = 128, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
-        
-        with tf.variable_scope('drop_out_2', reuse=tf.AUTO_REUSE):
-            self.layer['dropout_2'] = tf.layers.dropout(inputs = self.layer['fc2_layer'], rate = self.keep_prob)
 
-        with tf.variable_scope('fc3', reuse=tf.AUTO_REUSE):
-            self.layer['fc3_layer'] = tf.layers.dense(self.layer['dropout_2'], units = 32, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
+        with tf.variable_scope('fc2', reuse=tf.AUTO_REUSE):
+            self.layer['fc2_layer'] = tf.layers.dense(self.layer['dropout_1'], units = 32, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
 
         with tf.variable_scope('fc_output', reuse=tf.AUTO_REUSE):
-            self.layer['logits'] = tf.layers.dense(self.layer['fc3_layer'], units = self.class_num)
+            self.layer['logits'] = tf.layers.dense(self.layer['fc2_layer'], units = self.class_num)
         
         with tf.variable_scope('softmax'):
             self.layer['softmax'] = tf.nn.softmax(self.layer['logits'])
