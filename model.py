@@ -33,7 +33,7 @@ class Model:
                         padding='SAME'), name = 'image_conv_layer_1')
 
             with tf.variable_scope('image_batch_norm_1', reuse = tf.AUTO_REUSE):
-                self.layer['image_bn_1'] = tf.keras.layers.BatchNormalization(axis = 0, trainable=self.is_training, name = 'image_bn_1')(self.layer['image_conv1_layer'])
+                self.layer['image_bn_1'] = tf.keras.layers.BatchNormalization(axis = 1, trainable=self.is_training, name = 'image_bn_1')(self.layer['image_conv1_layer'])
 
             with tf.variable_scope('image_pool1', reuse=tf.AUTO_REUSE):
                 self.layer['image_pool1_layer'] = tf.nn.pool(self.layer['image_bn_1'],[3,3], pooling_type='AVG', padding='SAME', name = 'image_pooling_layer_1')
@@ -47,7 +47,7 @@ class Model:
                         padding='SAME'), name = 'image_conv_layer_2')
             
             with tf.variable_scope('image_batch_norm_2', reuse = tf.AUTO_REUSE):
-                self.layer['image_bn_2'] = tf.keras.layers.BatchNormalization(axis = 0, trainable=self.is_training, name = 'image_bn_2')(self.layer['image_conv2_layer'])
+                self.layer['image_bn_2'] = tf.keras.layers.BatchNormalization(axis = 1, trainable=self.is_training, name = 'image_bn_2')(self.layer['image_conv2_layer'])
 
             with tf.variable_scope('image_pool2', reuse=tf.AUTO_REUSE):
                 self.layer['image_pool2_layer'] = tf.nn.pool(self.layer['image_bn_2'],[3,3], pooling_type='AVG', padding='SAME', name = 'image_pooling_layer_2')
