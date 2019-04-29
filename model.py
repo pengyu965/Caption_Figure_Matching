@@ -93,10 +93,10 @@ class Model:
             self.layer['dropout_1'] = tf.layers.dropout(inputs = self.layer['fc1_layer'], rate = self.keep_prob)
         
         with tf.variable_scope('fc2', reuse=tf.AUTO_REUSE):
-            self.layer['fc2_layer'] = tf.layers.dense(self.layer['dropout_1'], units = 64, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
+            self.layer['fc2_layer'] = tf.layers.dense(self.layer['dropout_1'], units = 128, activation = tf.nn.relu, reuse=tf.AUTO_REUSE)
         
         with tf.variable_scope('fc_output', reuse=tf.AUTO_REUSE):
-            self.layer['logits'] = tf.layers.dense(self.layer['fc2_layer'], units = 10)
+            self.layer['logits'] = tf.layers.dense(self.layer['fc2_layer'], units = 2)
         
         with tf.variable_scope('softmax'):
             self.layer['softmax'] = tf.nn.softmax(self.layer['logits'])
