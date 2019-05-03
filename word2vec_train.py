@@ -39,5 +39,5 @@ def word_writer(list):
 
 
 if __name__ == "__main__":
-    # addword(json_dir)
+    addword(json_dir)
     word2vec.word2vec('./vocabulary.txt', './word2vec.bin', size=100, min_count=0, verbose=True)
